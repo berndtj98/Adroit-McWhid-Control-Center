@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html>
+
+<style>
+
+    .rangeslider {
+        width: 40%;
+       
+    }
+
+    .myslider {
+        -webkit-appearance: none;
+        background: #D5FFDA;
+        width: 50%;
+        height: 20px;
+        opacity: 2;
+        
+    }
+
+    .myslider2 {
+        -webkit-appearance: none;
+        background: #FFE0C6;
+        width: 50%;
+        height: 20px;
+        opacity: 2;
+    }
+
+
+
+    .myslider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        cursor: pointer;
+        background: #C07A00;
+        width: 5%;
+        height: 20px;
+        border: 3px #039110;
+    }
+
+    .myslider2::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        cursor: pointer;
+        background: #039110;
+        width: 5%;
+        height: 20px;
+    }
+
+        .myslider:hover {
+            opacity: 1;
+        }
+
+    .myslider2:hover {
+        opacity: 1;
+    }
+
+    .myDiv {
+        border: 3px solid #C07A00;
+        background-color: #FFE0C6;
+    }
+
+    .myDiv2 {
+        border: 3px solid #039110;
+        background-color: #D5FFDA;
+    }
+</style>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+
+    <h1>Adroit MCWHID Control Interface</h1>
+
+
+
+    <button id="connect" type="button">Connect</button>
+
+    <button id="disconnect" type="button">Disconnect</button>
+
+
+
+    <div class="myDiv">
+        <h2>Module 1 (Cursor Movement)</h2>
+
+        <!--start of slider code 1-->
+
+        <h4>Increment or decrement mouse movement sensitivity and press "Apply".</h4>
+        <p>Faster --> Slower Sensitvity</p>
+
+
+        <div class="rangeslider">
+            <input type="range" min="1" max="256" value="200"
+                   class="myslider" id="sliderRange">
+            <p>Value: <span id="demo"></span></p>
+        </div>
+
+
+        <script>var rangeslider = document.getElementById("sliderRange");
+            var output = document.getElementById("demo");
+            output.innerHTML = rangeslider.value;
+
+            rangeslider.oninput = function () {
+                output.innerHTML = this.value;
+            }</script>
+        <!--end of slider code 1-->
+        <!--apply changes button 1-->
+        <button id="applySensitivity" type="button">Apply</button>
+
+
+        <!--end of apply button 1-->
+
+        <h4>Choose Device 1 placement from dropdown list and press "Apply".</h4>
+
+        <!--start of dropdown list 1-->
+        <label for="device1Placement">Device 1 placement:</label>
+        <select name="device1Placement" id="device1Placement">
+            <option value="head">Head</option>
+            <option value="wrist">Wrist</option>
+            <option value="hand">Hand</option>
+        </select>
+        <br><br>
+        <button id="applyDevice1Placement" type="button">Apply</button>
+        <!--End of dropdown list 1 (and apply button)-->
+    </div>
+
+    <div class="myDiv2">
+        <h2>Module 2 (Action Gesture)</h2>
+        <!--start of slider code 2-->
+
+        <h4>Increment or decrement mouse gesture sensitivity and press "Apply".</h4>
+        <p>Small Gesture -------- Large Gesture</p>
+
+        <div class="rangeslider">
+            <input type="range" min="1" max="256" value="200"
+                   class="myslider2" id="sliderRange2">
+            <p>Value: <span id="demo2"></span></p>
+        </div>
+
+        <script>
+            var rangeslider2 = document.getElementById("sliderRange2");
+            var output2 = document.getElementById("demo2");
+            output2.innerHTML = rangeslider2.value;
+
+            rangeslider2.oninput = function () {
+                output2.innerHTML = this.value;
+            }
+        </script>
+        <!--end of slider code 2-->
+        <!--apply changes button 3-->
+        <button id="applySensitivity2" type="button">Apply</button>
+
+
+        <!--end of apply button 3-->
+
+        <h4>Choose Device 2 placement from dropdown list and press "Apply".</h4>
+
+        <!--start of dropdown list 2-->
+        <label for="device2Placement">Device 2 placement:</label>
+        <select name="device2Placement" id="device2Placement">
+            <option value="wrist2">Wrist</option>
+            <option value="ankle2">Ankle</option>
+            <option value="leg2">Leg</option>
+        </select>
+        <br><br>
+        <button id="applyDevice2Placement" type="button">Apply</button>
+        <!--End of dropdown list 2 (and apply button)-->
+    </div>
+
+    <div id="terminal"></div>
+
+    <form id="send-form">
+    </form>
+
+    <script src="main.js"></script>
+    <script src="companion.js" data-service-worker="sw.js"></script>
+
+</body>
+</html>
