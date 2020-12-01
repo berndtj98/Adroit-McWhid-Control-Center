@@ -1,27 +1,32 @@
 // Get references to UI elements
 let connectButton = document.getElementById('connect');
 let disconnectButton = document.getElementById('disconnect');
+let applyButton = document.getElementById('applySensitivity'); //get button press from slider apply button (Device 1)
 let terminalContainer = document.getElementById('terminal');
 let sendForm = document.getElementById('send-form');
 let inputField = document.getElementById('input');
-let sensitivityInput = document.getElementById('sliderRange'); //get number from slider (Device 1)
-let applyButton = document.getElementById('applySensitivity'); //get button press from slider apply button (Device 1)
-let device1Position = document.getElementById('device1Placement'); // get dropdown input 1 (Device 1)
-let applyButton2 = document.getElementById('applyDevice1Placement'); //get button press from position apply button (Device 1)
-let sensitivityInput2 = document.getElementById('sliderRange2'); //get number from slider 2 (Device 2)
-let applyButton3 = document.getElementById('applySensitivity2'); //get button press from slider 2 apply button (Device 2)
+let sensitivityInputX = document.getElementById('sliderRangeX');//get X number from sliderX (Device 1)
+let sensitivityInputY = document.getElementById('sliderRangeY');//get Y number from sliderY (Device 1)
 let device2Position = document.getElementById('device2Placement'); //get dropdown input 2 (Device 2)
-let applyButton4 = document.getElementById('applyDevice2Placement'); //get button press from position 2 apply button (Device 2)
-var slider_data;
-var slider_2_data;
-var placement_1_data;
-var placement_2_data;
+//let device1Position = document.getElementById('device1Placement'); // get dropdown input 1 (Device 1)
+//let applyButton2 = document.getElementById('applyDevice1Placement'); //get button press from position apply button (Device 1)
+let sensitivityInput3 = document.getElementById('sliderRange3'); //get number from slider 2 (Device 2)
+//let applyButton3 = document.getElementById('applySensitivity2'); //get button press from slider 2 apply button (Device 2)
 
-var UUID_SERVICE_SETTINGS = 0xB000;
-var UUID_CHAR_SENSITIVITY = 0xB001;
-var UUID_CHAR_POSITION_ONE = 0xB002;
-var UUID_CHAR_POSITION_TWO = 0xB003;
-var UUID_CHAR_SENSITIVITY_TWO = 0xB004;
+//let applyButton4 = document.getElementById('applyDevice2Placement'); //get button press from position 2 apply button (Device 2)
+let settingsArray = new ArrayBuffer(5);
+let view = new Uint8Array(settingsArray);
+var slider_data;
+//var regularArray = [];
+//var slider_2_data;
+//var placement_1_data;
+//var placement_2_data;
+
+var UUID_SERVICE_SETTINGS = '0000ffe0-0000-1000-8000-00805f9b34fb';
+var UUID_CHAR_SENSITIVITY = '0000ffe1-0000-1000-8000-00805f9b34fb';
+//var UUID_CHAR_POSITION_ONE = 0xB002;
+//var UUID_CHAR_POSITION_TWO = 0xB003;
+//var UUID_CHAR_SENSITIVITY_TWO = 0xB004;
 
 // Connect to the device on Connect button click
 connectButton.addEventListener('click', function () {
@@ -39,6 +44,7 @@ applyButton.addEventListener('click', function () {
     apply();
 });
 
+/*
 // Apply 2 button click
 applyButton2.addEventListener('click', function () {
     apply2();
@@ -53,6 +59,7 @@ applyButton3.addEventListener('click', function () {
 applyButton4.addEventListener('click', function () {
     apply4();
 });
+*/
 
 // Handle form submit event
 sendForm.addEventListener('submit', function(event) {
@@ -74,16 +81,76 @@ let readBuffer = '';
 
 function apply() {
     log('Apply button pressed');
-    log('Device 1 Sensitivity value set to ' + sensitivityInput.value + ', silly goose!');
-    event.preventDefault(); // Prevent from sending
-    sendSensitivity(sensitivityInput.value); // Send text field contents
-    //inputField.value = '';  // Zero text field
-    sensitivityInput.focus();     // Focus on text field
 
-    slider_data.writeValue(Uint8Array.of(sensitivityInput.value));
+    view[0] = 1;
+    view[1] = sensitivityInputX.value;
+    view[2] = sensitivityInputY.value;
+    view[3] = device2Position.value;
+    view[4] = sensitivityInput3.value;
+
+    
+
+    log('Device 1 Sensitivity X value set to ' + view + ', silly goose!');
+
+    event.preventDefault(); // Prevent from sending
+    sendSensitivity(settingsArray); // Send text field contents
+    characteristicCache.writeValue(settingsArray);
+
+    
+
+            //log('Device 1 Sensitivity Y value set to ' + sensitivityInputY.value + ', silly goose!');
+
+            //event.preventDefault(); // Prevent from sending
+            //sendSensitivity(sensitivityInputY.value); // Send text field contents
+            //characteristicCache.writeValue(Uint8Array.of(sensitivityInputY.value));
+
+            //await sleep(2000);
+        
+
+        
+        
+    
+    /*
+    //setTimeout(() => {
+        log('Device 1 Sensitivity Y value set to ' + sensitivityInputY.value + ', silly goose!');
+
+        event.preventDefault(); // Prevent from sending
+        sendSensitivity2(sensitivityInputY.value); // Send text field contents
+        slider_data.writeValue(Uint8Array.of(sensitivityInputY.value));
+    //}, 4000);
+    /*
+    setTimeout(() => {
+        log('Device 2 Placement set to ' + device2Position.value + ', silly goose!');
+
+        event.preventDefault(); // Prevent from sending
+        sendSensitivity3(device2Position.value); // Send text field contents
+        slider_data.writeValue(Uint8Array.of(device2Position.value));
+    }, 6000);
+
+    setTimeout(() => {
+        log('Device 2 Sensitivity value set to ' + sensitivityInput3.value + ', silly goose!');
+
+        event.preventDefault(); // Prevent from sending
+        sendSensitivity4(sensitivityInput3.value); // Send text field contents
+        slider_data.writeValue(Uint8Array.of(sensitivityInput3.value));
+
+        log('Settings applied.');
+    }, 8000);
+    //log('regular array is: ' + regularArray);
+    /*for (var i = 0; i < 3; i++) {
+        view.setUint8(i, view.charAt(i).charCodeAt());
+    }*/
+
+    //event.preventDefault(); // Prevent from sending
+    //sendSensitivity(settingsArray); // Send text field contents
+    //inputField.value = '';  // Zero text field
+    //settingsArray.focus();     // Focus on text field
+
+    //slider_data.writeValue(Uint8Array.of(sensitivityInput.value));
+    
 }
 
-function apply2() {
+/*function apply2() {
     log('Apply button pressed');
     log('Device 1 Placement set to ' + device1Position.value + ', silly goose!');
     event.preventDefault(); // Prevent from sending
@@ -92,13 +159,13 @@ function apply2() {
     device1Position.focus();     // Focus on text field
 
     if (device1Position.value == 'head')
-        placement_1_data.writeValue(Uint8Array.of(0x01));
+        placement_1_data.writeValue(Uint8Array.of(0x0001));
 
     if (device1Position.value == 'wrist')
-        placement_1_data.writeValue(Uint8Array.of(0x02));
+        placement_1_data.writeValue(Uint8Array.of(0x0002));
 
     if (device1Position.value == 'hand')
-        placement_1_data.writeValue(Uint8Array.of(0x03));
+        placement_1_data.writeValue(Uint8Array.of(0x0003));
 
     
 }
@@ -123,14 +190,14 @@ function apply4() {
     device2Position.focus();     // Focus on text field
 
     if (device2Position.value == 'wrist2')
-        placement_2_data.writeValue(Uint8Array.of(0x01));
+        placement_2_data.writeValue(Uint8Array.of(0x0001));
 
     if (device2Position.value == 'ankle2')
-        placement_2_data.writeValue(Uint8Array.of(0x02));
+        placement_2_data.writeValue(Uint8Array.of(0x0002));
 
     if (device2Position.value == 'leg2')
-        placement_2_data.writeValue(Uint8Array.of(0x03));
-}
+        placement_2_data.writeValue(Uint8Array.of(0x0003));
+}*/
 
 
 // Launch Bluetooth device chooser and connect to the selected
@@ -146,7 +213,9 @@ function requestBluetoothDevice() {
   log('Requesting bluetooth device...');
 
   return navigator.bluetooth.requestDevice({
-      filters: [{ name: 'McWhid - Mouse'}],
+      filters: [{ name: 'McWhidCtrlBLE' }],
+     
+      //acceptAllDevices: true
       optionalServices: [UUID_SERVICE_SETTINGS]
   }).
       then(device => {
@@ -187,9 +256,10 @@ function connectDeviceAndCacheCharacteristic(device) {
         log('Service found!');
           return service.getCharacteristic(UUID_CHAR_SENSITIVITY);
       }).
-
       then(characteristic => {
+
           slider_data = characteristic;
+
           characteristicCache = characteristic; 
           return characteristicCache;
       });
@@ -231,32 +301,44 @@ function disconnect() {
 // clone of send but data is from the slider range
 function sendSensitivity(data) {
     data = String(data);
-
-    if (!data || !characteristicCache){
+    
+    //log('Device 1 Sensitivity X value set to ' + data + ', silly goose!');
+    if (!data || !characteristicCache) {
+        
         return;
     }
 }
 
 function sendSensitivity2(data) {
     data = String(data);
-
+    //slider_data.writeValue(Uint8Array.of(data));
+    //log('Device 1 Sensitivity Y value set to ' + data + ', silly goose!');
     if (!data || !characteristicCache) {
+        
         return;
     }
 }
 
-function sendPosition1(data) {
+function sendSensitivity3(data) {
     data = String(data);
-
+    //slider_data.writeValue(Uint8Array.of(data));
+    //log('Device 2 Placement set to ' + data + ', silly goose!');
     if (!data || !characteristicCache) {
+        
         return;
     }
 }
 
-function sendPosition2(data) {
+function sendSensitivity4(data) {
     data = String(data);
-
+    //slider_data.writeValue(Uint8Array.of(data));
+    //log('Device 2 Sensitivity value set to ' + data + ', silly goose!');
     if (!data || !characteristicCache) {
+        
         return;
     }
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
