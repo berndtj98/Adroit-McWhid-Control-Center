@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <style>
@@ -11,7 +11,7 @@
     .myslider {
         -webkit-appearance: none;
         background: #D5FFDA;
-        width: 50%;
+        width: 200px;
         height: 20px;
         opacity: 2;
         
@@ -20,7 +20,7 @@
     .myslider2 {
         -webkit-appearance: none;
         background: #FFE0C6;
-        width: 50%;
+        width: 200px;
         height: 20px;
         opacity: 2;
     }
@@ -52,15 +52,41 @@
         opacity: 1;
     }
 
-    .myDiv {
+    .myDiv11 {
+        
         border: 3px solid #C07A00;
         background-color: #FFE0C6;
     }
 
-    .myDiv2 {
+    .myDiv12 {
+        
+        border: 3px solid #C07A00;
+        background-color: #FFE0C6;
+    }
+
+    .myDiv21 {
+        
         border: 3px solid #039110;
         background-color: #D5FFDA;
     }
+
+    .myDiv22 {
+        
+        border: 3px solid #039110;
+        background-color: #D5FFDA;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-gap: 5px;
+    }
+
+    .clear {
+        clear: both;
+    }
+
 </style>
 
 <head>
@@ -84,93 +110,114 @@
 
     <button id="disconnect" type="button">Disconnect</button>
 
+    <button id="applySensitivity" type="button">Apply Settings</button>
 
 
-    <div class="myDiv">
-        <h2>Module 1 (Cursor Movement)</h2>
+    <div class="grid-container">
+        <div class="myDiv11">
+            <h2> Module 1 (Cursor Movement)</h2>
 
-        <!--start of slider code 1-->
+            <!--start of slider code 1-->
 
-        <h4>Increment or decrement mouse movement sensitivity and press "Apply".</h4>
-        <p>Faster --> Slower Sensitvity</p>
+            <h4> X-Axis Sensitivity (Left and Right Movement):</h4>
+            <p>(-) &#x227A-------------------------&#x227B (+)</p>
 
 
-        <div class="rangeslider">
-            <input type="range" min="1" max="256" value="200"
-                   class="myslider" id="sliderRange">
-            <p>Value: <span id="demo"></span></p>
+            <div class="rangeslider">
+                <input type="range" min="0" max="20" value="10"
+                       class="myslider" id="sliderRangeX">
+                <p> Value: <span id="demo1"></span></p>
+            </div>
+
+
+            <script>
+                var rangeslider1 = document.getElementById("sliderRangeX");
+                var output1 = document.getElementById("demo1");
+                output1.innerHTML = rangeslider1.value;
+
+                rangeslider1.oninput = function () {
+                    output1.innerHTML = this.value;
+                }
+            </script>
+            <!--end of slider code 1-->
+            <!--apply changes button 1-->
+            <!--end of apply button 1-->
+
+            <h4> Y-Axis Sensitivity (Up and Down Movement):</h4>
+            <p>(-) &#x227A-------------------------&#x227B (+)</p>
+
+            <div class="rangeslider">
+                <input type="range" min="0" max="20" value="10"
+                       class="myslider" id="sliderRangeY">
+                <p> Value: <span id="demo2"></span></p>
+            </div>
+
+
+            <script>
+                var rangeslider2 = document.getElementById("sliderRangeY");
+                var output2 = document.getElementById("demo2");
+                output2.innerHTML = rangeslider2.value;
+
+                rangeslider2.oninput = function () {
+                    output2.innerHTML = this.value;
+                }
+            </script>
+
+            <!--start of dropdown list 1-->
+            <!--End of dropdown list 1 (and apply button)-->
         </div>
-
-
-        <script>var rangeslider = document.getElementById("sliderRange");
-            var output = document.getElementById("demo");
-            output.innerHTML = rangeslider.value;
-
-            rangeslider.oninput = function () {
-                output.innerHTML = this.value;
-            }</script>
-        <!--end of slider code 1-->
-        <!--apply changes button 1-->
-        <button id="applySensitivity" type="button">Apply</button>
-
-
-        <!--end of apply button 1-->
-
-        <h4>Choose Device 1 placement from dropdown list and press "Apply".</h4>
-
-        <!--start of dropdown list 1-->
-        <label for="device1Placement">Device 1 placement:</label>
-        <select name="device1Placement" id="device1Placement">
-            <option value="head">Head</option>
-            <option value="wrist">Wrist</option>
-            <option value="hand">Hand</option>
-        </select>
-        <br><br>
-        <button id="applyDevice1Placement" type="button">Apply</button>
-        <!--End of dropdown list 1 (and apply button)-->
-    </div>
-
-    <div class="myDiv2">
-        <h2>Module 2 (Action Gesture)</h2>
-        <!--start of slider code 2-->
-
-        <h4>Increment or decrement mouse gesture sensitivity and press "Apply".</h4>
-        <p>Small Gesture -------- Large Gesture</p>
-
-        <div class="rangeslider">
-            <input type="range" min="1" max="256" value="200"
-                   class="myslider2" id="sliderRange2">
-            <p>Value: <span id="demo2"></span></p>
+        <div class="myDiv12">
+            <h2> Instructions:</h2>
+            <p> hello this is some text</p>
         </div>
+        
+    
+        <div class="myDiv21">
+            <h2> Module 2 (Action Gesture)</h2>
 
-        <script>
-            var rangeslider2 = document.getElementById("sliderRange2");
-            var output2 = document.getElementById("demo2");
-            output2.innerHTML = rangeslider2.value;
+            <h4> Choose Device 2 Placement: </h4>
 
-            rangeslider2.oninput = function () {
-                output2.innerHTML = this.value;
-            }
-        </script>
-        <!--end of slider code 2-->
-        <!--apply changes button 3-->
-        <button id="applySensitivity2" type="button">Apply</button>
+            <!--start of dropdown list 2-->
+            <label for="device2Placement">Device 2 placement:</label>
+            <select name="device2Placement" id="device2Placement">
+                <option value="0">Knee</option>
+                <option value="1">Ankle</option>
+                <option value="2">Wrist</option>
+                <option value="3">Hand</option>
+            </select>
+            <br><br>
+
+            <!--End of dropdown list 2 (and apply button)-->
+            <!--start of slider code 2-->
+
+            <h4> Device 2 Sensitivity: </h4>
+            <p> (-) &#x227A-------------------------&#x227B (+)</p>
+
+            <div class="rangeslider">
+                <input type="range" min="0" max="20" value="10"
+                       class="myslider2" id="sliderRange3">
+                <p> Value: <span id="demo3"></span></p>
+            </div>
+
+            <script>
+                var rangeslider3 = document.getElementById("sliderRange3");
+                var output3 = document.getElementById("demo3");
+                output3.innerHTML = rangeslider3.value;
+
+                rangeslider3.oninput = function () {
+                    output3.innerHTML = this.value;
+                }
+            </script>
+            <!--end of slider code 2-->
+            <!--apply changes button 3-->
+            <!--end of apply button 3-->
 
 
-        <!--end of apply button 3-->
-
-        <h4>Choose Device 2 placement from dropdown list and press "Apply".</h4>
-
-        <!--start of dropdown list 2-->
-        <label for="device2Placement">Device 2 placement:</label>
-        <select name="device2Placement" id="device2Placement">
-            <option value="wrist2">Wrist</option>
-            <option value="ankle2">Ankle</option>
-            <option value="leg2">Leg</option>
-        </select>
-        <br><br>
-        <button id="applyDevice2Placement" type="button">Apply</button>
-        <!--End of dropdown list 2 (and apply button)-->
+        </div>
+        <div class="myDiv22">
+            <p> more text for more instructions haha</p>
+        </div>
+        
     </div>
 
     <div id="terminal"></div>
@@ -180,6 +227,7 @@
 
     <script src="main.js"></script>
     <script src="companion.js" data-service-worker="sw.js"></script>
+    
 
 </body>
 </html>
