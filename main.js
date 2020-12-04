@@ -90,7 +90,7 @@ function apply() {
 
     
 
-    log('Device 1 Sensitivity X value set to ' + view + ', silly goose!');
+    log('Device Settings values set to ' + view + '.');
 
     event.preventDefault(); // Prevent from sending
     sendSensitivity(settingsArray); // Send text field contents
