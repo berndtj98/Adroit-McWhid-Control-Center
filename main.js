@@ -90,7 +90,7 @@ function apply() {
 
     
 
-    log('Device Settings values set to ' + view + '.');
+    log('Device Settings applied.');
 
     event.preventDefault(); // Prevent from sending
     sendSensitivity(settingsArray); // Send text field contents
